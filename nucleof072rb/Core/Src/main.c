@@ -47,11 +47,11 @@
 
 /* USER CODE BEGIN PV */
 
-uint8_t txData[3] = {0};
-uint8_t rxData[3] = {0};
+uint8_t tx_data[3] = {0};
+uint8_t rx_data[3] = {0};
 
-uint16_t adcValue = 0;
-uint16_t pwmValue = 0;
+uint16_t adc_value = 0;
+uint16_t pwm_value = 0;
 
 /* USER CODE END PV */
 
@@ -111,21 +111,21 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	  txData[0] = 0x01;  // start bit
-	  txData[1] = 0x80;  // single-ended, CH0
-	  txData[2] = 0x00;
+	  tx_data[0] = 0x01;
+	  tx_data[1] = 0x80;
+	  tx_data[2] = 0x00;
 
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_RESET);
 
-	  HAL_SPI_TransmitReceive(&hspi1, txData, rxData, 3, HAL_MAX_DELAY);
+	  HAL_SPI_TransmitReceive(&hspi1, tx_data, rx_data, 3, HAL_MAX_DELAY);
 
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
 
-	  adcValue = ((rxData[1] & 0x03) << 8) | rxData[2];
+	  adc_value = ((rx_data[1] & 0x03) << 8) | rx_data[2];
 
-	  pwmValue = 1000 + ((adcValue * 1000) / 1023);
+	  pwm_value = 1000 + ((adc_value * 1000) / 1023);
 
-	  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, pwmValue);
+	  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, pwm_value);
 
 	  HAL_Delay(10);
   }
