@@ -123,7 +123,7 @@ int main(void)
 
 	  adc_value = ((rx_data[1] & 0x03) << 8) | rx_data[2];
 
-	  pwm_value = 1000 + ((adc_value * 1000) / 1023);
+	  pwm_value = 3200 + ((adc_value * 3200) / 1023);
 
 	  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, pwm_value);
 
